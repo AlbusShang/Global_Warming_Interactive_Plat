@@ -9,32 +9,16 @@ from pathlib import Path
 
 st.set_page_config(page_title="🌍 Interactive Map for Global Warming", layout="wide")
 
-# 你的 ERA5 数据目录（按你给的路径）
-DATA_DIR = (
-    Path.home()
-    / "Desktop"
-    / "Albus"
-    / "工作生活"
-    / "实习"
-    / "千禧年计划"
-    / "Global_Warming_Interactive"
-    / "ERA5_monthly"
-)
+# Map_Interactive.py 所在目录
+APP_DIR = Path(__file__).resolve().parent
 
-# 兜底：如果你实际目录是下划线版本
+# ERA5 数据目录（与 Map_Interactive.py 同级）
+DATA_DIR = APP_DIR / "ERA5_monthly"
+
+# 检查数据目录是否存在
 if not DATA_DIR.exists():
-    alt = (
-        Path.home()
-        / "Desktop"
-        / "Albus"
-        / "工作生活"
-        / "实习"
-        / "千禧年计划"
-        / "Global_Warming_Interactive_Platform"
-        / "ERA5_monthly"
-    )
-    if alt.exists():
-        DATA_DIR = alt
+    st.error(f"找不到 ERA5 数据文件夹：{DATA_DIR}")
+    st.stop()
 
 MONTH_FILE_TMPL = "t2m_2deg_month_{:02d}.nc"
 ANNUAL_FILE = "t2m_2deg_annual_mean.nc"
