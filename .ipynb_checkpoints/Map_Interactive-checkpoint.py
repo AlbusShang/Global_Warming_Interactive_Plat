@@ -17,7 +17,7 @@ DATA_DIR = (
     / "工作生活"
     / "实习"
     / "千禧年计划"
-    / "Global_Warming_Interactive"
+    / "Global Warming Interactive Platform"
     / "ERA5_monthly"
 )
 
