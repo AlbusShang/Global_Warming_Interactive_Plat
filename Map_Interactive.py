@@ -251,3 +251,7 @@ with col_right:
 
     with st.expander("Current slice info"):
         st.write(pd.Series(df_poly["temp_c"]).describe(percentiles=[0.05, 0.5, 0.95]))
+
+
+if st.button("See how each country is acting in response to climate change →"):
+    st.switch_page("pages/Nation_Commitments.py")

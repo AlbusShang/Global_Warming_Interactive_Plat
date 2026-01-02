@@ -1,0 +1,50 @@
+# Country: Federal Republic of Germany (Germany, DEU)
+
+## Region: Europe (Central Europe)  
+## Status: Developed country  
+## Current leader: Olaf Scholz
+
+---
+
+## I. International Commitments
+
+Germany is a Party to the Paris Agreement and, as an EU Member State, participates in the European Union’s nationally determined contribution (NDC) submitted **on behalf of the EU and its Member States**. The EU’s updated NDC commits to a **net domestic reduction of at least 55% in greenhouse gas emissions by 2030 compared with 1990 levels** (including the land sector).  
+(As an EU Member State, Germany’s international commitment is closely tied to this EU-wide target and the associated EU policy architecture.)  
+Source: UNFCCC EU NDC update submission. 
+
+In parallel, Germany has codified ambitious long-term objectives domestically (see Section II), which function as the country’s core pathway for delivering its EU-level obligations.
+
+---
+
+## II. Domestic Policies
+
+Germany’s central legal framework is the **Federal Climate Change Act (Klimaschutzgesetz / Climate Change Act)**, which—after amendments—enshrines the goal of **greenhouse gas neutrality by 2045** and tightens the 2030 target to **at least 65% reduction vs. 1990**.  
+Source: German Federal Government (Bundesregierung) overview of the amended Climate Change Act. 
+
+To operationalize these goals, the federal government has adopted economy-wide packages and sectoral measures. Notably, the federal cabinet adopted the **Climate Action Programme 2023**, designed to reduce emissions across all major sectors and support compliance with the Climate Change Act pathway.  
+Source: Federal Ministry for Economic Affairs and Climate Action (BMWE/BMWK) policy page + programme PDF. 
+
+In addition to mitigation, Germany has strengthened its adaptation planning. In late 2024, the federal government published a new **German Climate Adaptation Strategy** with measurable targets, as required by the Federal Climate Adaptation Act framework.  
+Source: Federal Ministry for the Environment (BMUV). 
+
+---
+
+## III. Are These Policies Sufficient?
+
+- **Germany has clear, legally anchored targets**: climate neutrality by **2045** and at least **65% emissions reduction by 2030** compared with 1990 levels, providing a binding long-term direction.  
+  Source: Bundesregierung (Climate Change Act overview). 
+
+- **Policy implementation is structured through national programmes**, including the **Climate Action Programme 2023**, which bundles cross-sector and sector-specific measures to close gaps toward the 2030 target.  
+  Source: BMWE/BMWK. 
+
+- **Adaptation policy is becoming more target-driven**, with the 2024 strategy explicitly framed around measurable goals for managing climate risks.  
+  Source: BMUV. 
+
+- **However, independent international assessment still finds the overall package insufficient for 1.5°C alignment**. The Climate Action Tracker rates Germany’s overall climate targets, policies, and finance as **“Insufficient.”**  
+  Source: Climate Action Tracker (Germany profile). 
+
+- CAT further notes a mixed picture: Germany’s **“Policies & action”** are assessed as **“Almost sufficient”** against modelled domestic pathways, but implemented policies put the **2030 target “at risk”** and are not enough for long-term goals without additional strengthening.  
+  Source: Climate Action Tracker (Policies & action). 
+
+- A recurrent weakness highlighted across assessments is the **difficulty of delivering reductions in lagging sectors (especially transport and buildings)**, which can undermine the credibility of post-2030 and net-zero trajectories even if near-term progress improves.  
+  (Example reporting drawing on Germany’s expert advisory context and sector performance discussion.)
