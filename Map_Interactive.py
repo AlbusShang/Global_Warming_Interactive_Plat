@@ -7,6 +7,9 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from pathlib import Path
 
+# ✅ 用于 deck.gl click 事件回传
+from streamlit_deckgl import st_deckgl
+
 st.set_page_config(page_title="🌍 Interactive Map for Global Warming", layout="wide")
 
 # Map_Interactive.py 所在目录
@@ -110,11 +113,9 @@ def grid_to_polygons(lat, lon, temp_c, cmap_name="turbo"):
     把 2D 栅格转成 PolygonLayer 需要的 DataFrame
     每格一个矩形 polygon，带 fill_color
     """
-    # 处理边界
     lat_edges = edges_from_centers(lat)
     lon_edges = edges_from_centers(lon)
 
-    # 色标范围：分位数，避免极端值挤压
     vals = temp_c.ravel()
     vals = vals[np.isfinite(vals)]
     vmin = float(np.nanpercentile(vals, 2))
@@ -129,8 +130,6 @@ def grid_to_polygons(lat, lon, temp_c, cmap_name="turbo"):
     nlat = len(lat)
     nlon = len(lon)
 
-    # 生成每个格子的 polygon（四角）
-    # 注意：pydeck polygon 坐标顺序是 [lon, lat]
     for i in range(nlat):
         lat0, lat1 = float(lat_edges[i]), float(lat_edges[i + 1])
         for j in range(nlon):
@@ -158,14 +157,94 @@ def grid_to_polygons(lat, lon, temp_c, cmap_name="turbo"):
     return df_poly, vmin, vmax
 
 
+@st.cache_data(show_spinner=True)
+def load_point_timeseries(mode, lat0, lon0):
+    """
+    mode: "Annual" 或 1..12
+    返回：years(1d), temps_c(1d), nearest_lat, nearest_lon
+    """
+    path = file_for_mode(mode)
+    ds = xr.open_dataset(path)
+
+    time_index = pd.to_datetime(ds["valid_time"].values)
+    years_all = time_index.year
+
+    t2m = ds["t2m"]
+
+    # 经度修正到 [-180, 180)
+    lon = t2m["longitude"]
+    lon_fixed = (((lon + 180) % 360) - 180)
+    t2m = t2m.assign_coords(longitude=lon_fixed).sortby("longitude")
+
+    # 点击经度也规范化到 [-180, 180)
+    lon0_fixed = ((float(lon0) + 180) % 360) - 180
+
+    # 选最近邻格点
+    point = t2m.sel(latitude=float(lat0), longitude=float(lon0_fixed), method="nearest")
+
+    # 保险起见按年聚合（即使一年有多时刻也能处理）
+    df = pd.DataFrame({"year": years_all, "t2m": point.values})
+    series = df.groupby("year")["t2m"].mean()
+
+    years = series.index.values.astype(int)
+    temps_c = (series.values - 273.15).astype(np.float32)
+
+    nearest_lat = float(point["latitude"].values)
+    nearest_lon = float(point["longitude"].values)
+
+    ds.close()
+    return years, temps_c, nearest_lat, nearest_lon
+
+
+def plot_timeseries(years, temps_c, mode, nearest_lat, nearest_lon):
+    fig, ax = plt.subplots(figsize=(8.2, 3.6), dpi=160)
+    ax.plot(years, temps_c)
+
+    if mode == "Annual":
+        title = f"Annual Mean Temperature Trend @ nearest grid ({nearest_lat:.2f}, {nearest_lon:.2f})"
+    else:
+        title = f"Month {int(mode):02d} Temperature Trend @ nearest grid ({nearest_lat:.2f}, {nearest_lon:.2f})"
+
+    ax.set_title(title)
+    ax.set_xlabel("Year")
+    ax.set_ylabel("Temperature (°C)")
+    ax.grid(True, alpha=0.25)
+    return fig
+
+
+def parse_click_latlon(event_dict):
+    """
+    尽量兼容不同 deck.gl 事件 payload 格式。
+    目标：返回 (lat, lon) 或 None
+    """
+    if not isinstance(event_dict, dict):
+        return None
+
+    # 常见：{'coordinate': [lon, lat, ...]}
+    coord = event_dict.get("coordinate")
+    if isinstance(coord, (list, tuple)) and len(coord) >= 2:
+        lon, lat = coord[0], coord[1]
+        return float(lat), float(lon)
+
+    # 有些会叫 lngLat: [lng, lat]
+    lnglat = event_dict.get("lngLat") or event_dict.get("lnglat")
+    if isinstance(lnglat, (list, tuple)) and len(lnglat) >= 2:
+        lon, lat = lnglat[0], lnglat[1]
+        return float(lat), float(lon)
+
+    # 兜底：直接提供 lat/lon
+    if "lat" in event_dict and "lon" in event_dict:
+        return float(event_dict["lat"]), float(event_dict["lon"])
+    if "latitude" in event_dict and "longitude" in event_dict:
+        return float(event_dict["latitude"]), float(event_dict["longitude"])
+
+    return None
+
+
 # ----------------------------
 # UI
 # ----------------------------
 st.title("🌍 Interactive Map for Global Warming")
-
-if not DATA_DIR.exists():
-    st.error(f"找不到 ERA5 数据文件夹：{DATA_DIR}")
-    st.stop()
 
 # 文件存在性检查
 missing = []
@@ -195,7 +274,13 @@ with col_left:
 
     years = get_years_for_file(file_for_mode(mode))
     year_min, year_max = int(years.min()), int(years.max())
-    year = st.slider("Select a year", min_value=year_min, max_value=year_max, value=year_min, step=1)
+    year = st.slider(
+        "Select a year",
+        min_value=year_min,
+        max_value=year_max,
+        value=year_min,
+        step=1,
+    )
 
     st.markdown("---")
     cmap_name = st.selectbox("Color", ["turbo", "viridis", "plasma", "inferno"], index=0)
@@ -204,9 +289,12 @@ with col_left:
 
     st.caption(f"数据目录：{DATA_DIR}")
 
+    st.markdown("---")
+    st.subheader("📍 Click-to-plot")
+    st.caption("直接在右侧主地图上点击一个格子：\n- Month 模式：画该月逐年曲线\n- Annual 模式：画年平均逐年曲线")
+
 with col_right:
     lat, lon, temp_c = load_year_field(mode, year)
-
     df_poly, vmin, vmax = grid_to_polygons(lat, lon, temp_c, cmap_name=cmap_name)
 
     if mode == "Annual":
@@ -239,19 +327,60 @@ with col_right:
     deck = pdk.Deck(
         layers=[poly_layer],
         initial_view_state=view_state,
-        map_style=BASEMAP,  # ✅ 国界/海岸线/地名
+        map_style=BASEMAP,
         tooltip=tooltip,
-        
     )
 
-    st.pydeck_chart(deck, use_container_width=True)
+    # ✅ 监听 click 事件（返回事件 payload）
+    event = st_deckgl(deck, height=560, key="main_deck", events=["click"])
 
+    # ---- Colorbar & slice info ----
     st.markdown("**Colorbar**")
     st.pyplot(draw_colorbar(vmin, vmax, cmap_name), use_container_width=False)
 
     with st.expander("Current slice info"):
         st.write(pd.Series(df_poly["temp_c"]).describe(percentiles=[0.05, 0.5, 0.95]))
 
+    # ----------------------------
+    # 点击 -> 时间序列
+    # ----------------------------
+    st.markdown("---")
+    st.subheader("📈 Temperature trend at clicked location (1940–2024)")
+
+    clicked = parse_click_latlon(event)
+    if clicked is not None:
+        st.session_state["clicked_lat"], st.session_state["clicked_lon"] = clicked
+
+    if "clicked_lat" not in st.session_state:
+        st.info("Please select a point on the map above.")
+    else:
+        lat0 = float(st.session_state["clicked_lat"])
+        lon0 = float(st.session_state["clicked_lon"])
+        st.write(f"Selected click: **lat={lat0:.4f}**, **lon={lon0:.4f}**")
+
+        years_ts, temps_ts, near_lat, near_lon = load_point_timeseries(mode, lat0, lon0)
+
+        # 目标范围：1940–2024（若文件不全，会自动按可用年份截取）
+        mask = (years_ts >= 1940) & (years_ts <= 2024)
+        years_ts = years_ts[mask]
+        temps_ts = temps_ts[mask]
+
+        if len(years_ts) == 0:
+            st.warning("该文件内没有落在 1940–2024 的年份数据（请检查 valid_time 覆盖范围）。")
+        else:
+            st.pyplot(plot_timeseries(years_ts, temps_ts, mode, near_lat, near_lon), use_container_width=True)
+
+            with st.expander("Point info"):
+                st.write(
+                    {
+                        "mode": "Annual" if mode == "Annual" else f"Month {int(mode):02d}",
+                        "clicked_lat": lat0,
+                        "clicked_lon": lon0,
+                        "nearest_grid_lat": near_lat,
+                        "nearest_grid_lon": near_lon,
+                        "years_covered": f"{int(years_ts.min())}–{int(years_ts.max())}",
+                    }
+                )
 
 if st.button("See how each country is acting in response to climate change →"):
     st.switch_page("pages/Nation_Commitments.py")
