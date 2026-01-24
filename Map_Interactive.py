@@ -384,3 +384,6 @@ with col_right:
 
 if st.button("See how each country is acting in response to climate change →"):
     st.switch_page("pages/Nation_Commitments.py")
+
+if st.button("Want to test how much I know about climate science and climate change→"):
+    st.switch_page("pages/ClimateQuiz.py")
