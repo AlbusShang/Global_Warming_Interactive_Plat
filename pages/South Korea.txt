@@ -1,0 +1,57 @@
+# Country: Republic of Korea (South Korea, KOR)
+
+## Region: East Asia  
+## Status: Developed country  
+## Current leader: Lee Jae-myung, President of the Republic of Korea
+
+---
+
+## I. International Commitments
+
+South Korea is a Party to the Paris Agreement and has progressively updated its nationally determined contributions (NDCs). Its **2030 NDC** commits to reducing greenhouse gas emissions by **40% below 2018 levels**, while its **2035 NDC**, submitted in December 2025, sets a reduction range of **53–61% below 2018 net emissions**.
+
+South Korea has also enshrined a **2050 carbon neutrality target** in national law through the Carbon Neutrality Act. At COP30, South Korea announced its intention to **phase out coal-fired power generation by 2040**, joining the Powering Past Coal Alliance.
+
+The government has indicated its intention to make use of **international market mechanisms under Article 6** of the Paris Agreement, though detailed plans regarding their scale and role remain unclear.
+
+---
+
+## II. Domestic Policies
+
+South Korea’s climate policy framework is anchored in the **Carbon Neutrality Act**, the **Basic Plans for Electricity Supply and Demand**, and the national **Emissions Trading Scheme (K-ETS)**, which covers more than 70% of national greenhouse gas emissions.
+
+The power sector remains central to South Korea’s decarbonisation strategy. The country plans to reduce coal use gradually, increase the share of renewable electricity to **at least 30% by 2035**, and expand nuclear power, which already supplies nearly one-third of electricity generation. Nuclear energy has been classified as “green” under the national taxonomy and granted access to low-interest financing.
+
+Renewable energy deployment has lagged behind other OECD and G20 countries, constrained by complex permitting processes, grid limitations, and market design issues. Under current plans, the share of renewables in electricity generation is expected to reach only **22% by 2030**, below earlier targets.
+
+In industry, South Korea relies on efficiency improvements, fuel switching, and technological solutions to reduce emissions in carbon-intensive sectors such as steel, petrochemicals, and cement. The fourth phase of the K-ETS (2026–2030) tightens the emissions cap and increases auctioning of allowances, though many high-emitting industries continue to receive free allocations.
+
+South Korea continues to support **liquefied natural gas (LNG)** as a transitional fuel and remains involved in overseas fossil fuel investments, raising concerns about long-term carbon lock-in.
+
+---
+
+## III. Are These Policies Sufficient?
+
+- South Korea’s greenhouse gas emissions have declined since peaking in 2018, but under current policies emissions are projected to reach only **11–19% below 2018 levels by 2030**, excluding LULUCF, falling short of its domestic 2030 NDC target.
+
+- The **2035 NDC is assessed as not aligned with 1.5°C-compatible pathways**, particularly when evaluated against the upper end of its target range and modelled domestic emissions trajectories.
+
+- The planned **2040 coal phase-out**, while a significant policy shift, remains **too slow for a developed country** seeking alignment with a 1.5°C pathway, especially given the potential substitution of coal with LNG.
+
+- South Korea’s climate policy continues to **prioritise nuclear power and gas**, while renewable energy expansion remains insufficient in scale and pace despite the country’s significant renewable potential.
+
+- The **Emissions Trading Scheme reforms** represent a positive step, but uncertainties remain regarding their effectiveness due to continued free allocation of allowances and limited impact on heavy industry emissions.
+
+- The reliance on **international carbon credits under Article 6**, without clear safeguards and transparency, risks delaying domestic mitigation and undermining alignment with the Paris Agreement.
+
+- As a result, international assessments rate **South Korea’s overall climate targets and policies as “Insufficient”**. Improvements in recent ratings largely reflect methodological updates rather than substantial increases in policy ambition.
+
+---
+
+## Sources
+
+- Climate Action Tracker: South Korea Country Assessment  
+- UNFCCC NDC Registry: Republic of Korea (2030 and 2035 NDC submissions)  
+- Government of the Republic of Korea: Carbon Neutrality Act  
+- Government of the Republic of Korea: Basic Plans for Electricity Supply and Demand  
+- Korea Emissions Trading Scheme (K-ETS) official documentation

@@ -1,12 +1,15 @@
 import random
 import streamlit as st
 
-st.set_page_config(page_title="Climate Quiz (with Explanations)", layout="centered")
+st.set_page_config(page_title="Climate Quiz (Smart Feedback)", layout="centered")
 st.title("🌍 Climate Change Quiz")
-st.caption("Choose 5 / 10 / 15 questions. After each answer, you'll see correctness, the correct answer, and an explanation.")
+st.caption(
+    "Choose 5 / 10 / 15 questions. If you answer correctly, you'll move on automatically. "
+    "If you answer incorrectly, you'll see the correct answer + explanation, then click Next."
+)
 
 # ----------------------------
-# Question bank (18 questions)
+# Question bank (24 questions)
 # ----------------------------
 QUESTION_BANK = [
     {
@@ -231,10 +234,84 @@ QUESTION_BANK = [
         "answer": "A",
         "explanation": (
             "Warm air rises from the equator and flows to 30°, where it condenses and flows back to the equator. "
-            "It forms the Hadley Cell, which exists in both hemispheres. The Ferrel Cell is in the mid-latitude "
+            "It forms the Hadley Cell, which exists in both hemispheres. The Ferrel Cell is in the mid-latitude."
             "while the Polar Cell is in the high-latitude."
         ),
     },
+{
+        "id": 19,
+        "q": "What weather system is the typhoon from?",
+        "options": {"A": "Cyclone", "B": "Anti-cyclone", "C": "Cold Front", "D": "Warm Front"},
+        "answer": "A",
+        "explanation": (
+            """ The typhoon is generated from a low-pressure center in the atmosphere above the warm ocean surface.
+		As the surrounding atmosphere is relatively high-pressure, the air spirals inward and convects upward, 
+		forming a lot of rain. Such a convection is called a cyclone."""
+        ),
+    },
+{
+        "id": 20,
+        "q": "How can we best define the latitude of 60 °?",
+        "options": {"A": "Cold and dry", "B": "Cold and wet", "C": "Hot and dry", "D": "Hot and wet"},
+        "answer": "B",
+        "explanation": (
+            """This is a relatively high latitude, so certainly it is cold. It is also under the upward limb of the 
+		Ferrel Cell, where the air convects upward and forms a low-pressure zone. The moisture condenses and 
+		forms precipitation. This latitude is called the Subpolar Low."""
+        ),
+    },
+{
+        "id": 21,
+        "q": "What is an advantage of a monsoonal climate for agriculture?",
+        "options": {"A": "It rains a lot", "B": "It is warm enough", "C": "It brings warmth and rain at the same time"},
+        "answer": "C",
+        "explanation": (
+            """In a monsoon climate, the rainy season and the warm season happen at the same time.
+		This is good for crops because plants need both heat and water to grow.
+		Warm temperatures help crops grow faster, and frequent rain provides enough water for roots and leaves.
+		When rain and heat come together, crops can grow strong without needing much artificial irrigation. """
+        ),
+    },
+{
+        "id": 22,
+        "q": "Which of the following approaches cannot result in a low-carbon world?",
+        "options": {"A": "Promote the use of electric vehicles", "B": "Expand green areas", "C": "Eat genetically produced meat","D":"Use Big Data substantially"},
+        "answer": "D",
+        "explanation": (
+            """Big Data needs many computers and data centers, which use a lot of electricity.
+		If this electricity comes from fossil fuels, carbon emissions will increase.
+		So Big Data alone cannot create a low-carbon world."""
+        ),
+    },
+{
+        "id": 23,
+        "q": "Why is deep seawater colder than shallow seawater?",
+        "options": {"A": "Surface water can receive sunlight, while deep water cannot", "B": "Cold water is heavier (higher density), so it will sink", "C": "Human activities warm up the sea surface","D":"Both A and B"},
+        "answer": "D",
+        "explanation": (
+            """Deep seawater is colder for two main reasons.
+		First, sunlight mainly heats the surface of the ocean, and very little sunlight can reach deep water.
+		Second, cold water is denser (heavier) than warm water, so it sinks to the bottom of the ocean.
+		As a result, deep seawater stays cold while surface water is warmer."""
+        ),
+    },
+{
+        "id": 24,
+        "q": "What is the difference between randomness and chaos?",
+        "options": {"A": "Randomness is completely unpredictable, while chaos is unpredictable because it has no rules.",
+ 			"B": "Randomness follows clear physical laws, while chaos does not.", 
+			"C": "Randomness has no underlying order, while chaos follows deterministic rules but is very sensitive to initial conditions.",
+			"D":"There is no difference between randomness and chaos."},
+        "answer": "C",
+        "explanation": (
+            """Randomness means there is no clear pattern or rule behind the behavior, 
+		so the outcome cannot be predicted even in theory.
+		Chaos, however, follows deterministic physical laws, 
+		but very small differences in initial conditions can lead to very different results.
+		Because we can never measure initial conditions perfectly, 
+		chaotic systems appear unpredictable, even though they are not truly random."""
+        ),
+    }
 ]
 
 # ----------------------------
@@ -248,24 +325,29 @@ if "idx" not in st.session_state:
     st.session_state.idx = 0
 if "correct" not in st.session_state:
     st.session_state.correct = 0
-if "answered" not in st.session_state:
-    st.session_state.answered = False
-if "last_feedback" not in st.session_state:
-    # ("correct"/"wrong", correct_letter)
-    st.session_state.last_feedback = None
+
+# When a user answers wrong, we "lock" the question and show explanation until they click Next.
+if "show_explanation" not in st.session_state:
+    st.session_state.show_explanation = False
+
+# Store last wrong feedback to render explanation on rerun
+if "last_wrong_info" not in st.session_state:
+    # {"correct_letter": "B", "correct_text": "...", "explanation": "..."}
+    st.session_state.last_wrong_info = None
+
+# For stable radio selection
 if "selected_option" not in st.session_state:
     st.session_state.selected_option = None
 
 
 def start_quiz(n: int):
-    if n > len(QUESTION_BANK):
-        n = len(QUESTION_BANK)
+    n = min(n, len(QUESTION_BANK))
     st.session_state.quiz_questions = random.sample(QUESTION_BANK, k=n)
     st.session_state.quiz_started = True
     st.session_state.idx = 0
     st.session_state.correct = 0
-    st.session_state.answered = False
-    st.session_state.last_feedback = None
+    st.session_state.show_explanation = False
+    st.session_state.last_wrong_info = None
     st.session_state.selected_option = None
 
 
@@ -274,8 +356,15 @@ def reset_quiz():
     st.session_state.quiz_questions = []
     st.session_state.idx = 0
     st.session_state.correct = 0
-    st.session_state.answered = False
-    st.session_state.last_feedback = None
+    st.session_state.show_explanation = False
+    st.session_state.last_wrong_info = None
+    st.session_state.selected_option = None
+
+
+def go_next_question():
+    st.session_state.idx += 1
+    st.session_state.show_explanation = False
+    st.session_state.last_wrong_info = None
     st.session_state.selected_option = None
 
 
@@ -284,7 +373,7 @@ def reset_quiz():
 # ----------------------------
 with st.sidebar:
     st.header("⚙️ Quiz Settings")
-    n_questions = st.radio("Choose number of questions", [5, 10, 15], index=1)
+    n_questions = st.radio("Choose number of questions", [5, 10, 15,20,24], index=1)
 
     if not st.session_state.quiz_started:
         if st.button("Start Quiz", use_container_width=True):
@@ -298,7 +387,7 @@ with st.sidebar:
 # Main flow
 # ----------------------------
 if not st.session_state.quiz_started:
-    st.info("Choose 5 / 10 / 15 questions in the sidebar, then click **Start Quiz**.")
+    st.info("Choose 5 / 10 / 15 / 20 / 24 questions in the sidebar, then click **Start Quiz**.")
     st.stop()
 
 total = len(st.session_state.quiz_questions)
@@ -326,11 +415,9 @@ if idx >= total:
 
 # Current question
 qobj = st.session_state.quiz_questions[idx]
-
 st.subheader(f"Question {idx+1} / {total}")
 st.write(f"**{qobj['q']}**")
 
-# Display options
 opt_keys = list(qobj["options"].keys())
 opt_labels = [f"{k}. {qobj['options'][k]}" for k in opt_keys]
 
@@ -339,58 +426,59 @@ default_index = 0
 if st.session_state.selected_option in opt_keys:
     default_index = opt_keys.index(st.session_state.selected_option)
 
+# If showing explanation (wrong answer), lock selection
 choice_label = st.radio(
     "Select one:",
     opt_labels,
     index=default_index,
     key=f"radio_{qobj['id']}_{idx}",
-    disabled=st.session_state.answered,
+    disabled=st.session_state.show_explanation,
 )
 
-# Parse selected option letter from label "A. xxx"
 selected_letter = choice_label.split(".")[0].strip()
 st.session_state.selected_option = selected_letter
 
-# Submit / Next buttons
 colA, colB = st.columns(2)
 
+# Confirm button is disabled only when we are currently showing explanation
 with colA:
-    submit = st.button("✅ Confirm", use_container_width=True, disabled=st.session_state.answered)
+    confirm = st.button("✅ Confirm", use_container_width=True, disabled=st.session_state.show_explanation)
 
+# Next button only appears when explanation is being shown
 with colB:
-    next_q = st.button("➡️ Next", use_container_width=True, disabled=not st.session_state.answered)
+    next_btn = st.button("➡️ Next", use_container_width=True, disabled=not st.session_state.show_explanation)
 
-if submit:
+# ----------------------------
+# Confirm logic:
+# - Correct: increment score, auto-advance to next question
+# - Wrong: show correct answer + explanation, require clicking Next
+# ----------------------------
+if confirm:
     correct_letter = qobj["answer"]
     if selected_letter == correct_letter:
         st.session_state.correct += 1
-        st.session_state.last_feedback = ("correct", correct_letter)
+        go_next_question()
+        st.rerun()
     else:
-        st.session_state.last_feedback = ("wrong", correct_letter)
+        correct_text = f"{correct_letter}. {qobj['options'][correct_letter]}"
+        explanation_text = qobj.get("explanation", "").strip()
+        st.session_state.last_wrong_info = {
+            "correct_letter": correct_letter,
+            "correct_text": correct_text,
+            "explanation": explanation_text,
+        }
+        st.session_state.show_explanation = True
+        st.rerun()
 
-    st.session_state.answered = True
-    st.rerun()
-
-# Feedback block (after submit)
-if st.session_state.answered and st.session_state.last_feedback is not None:
-    status, correct_letter = st.session_state.last_feedback
-    correct_text = f"{correct_letter}. {qobj['options'][correct_letter]}"
-    explanation_text = qobj.get("explanation", "").strip()
-
-    if status == "correct":
-        st.success(f"✅ Correct! The answer is **{correct_text}**.")
-    else:
-        st.error(f"❌ Incorrect. The correct answer is **{correct_text}**.")
-
-    if explanation_text:
+# Show explanation only when wrong
+if st.session_state.show_explanation and st.session_state.last_wrong_info:
+    info = st.session_state.last_wrong_info
+    st.error(f"❌ Incorrect. The correct answer is **{info['correct_text']}**.")
+    if info["explanation"]:
         st.markdown("**Explanation:**")
-        st.write(explanation_text)
-
+        st.write(info["explanation"])
     st.caption("Click **Next** to continue.")
 
-if next_q:
-    st.session_state.idx += 1
-    st.session_state.answered = False
-    st.session_state.last_feedback = None
-    st.session_state.selected_option = None
+if next_btn:
+    go_next_question()
     st.rerun()

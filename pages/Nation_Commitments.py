@@ -26,7 +26,7 @@ def policy(country: str, txt_dir: Path = HERE, expanded: bool = False):
         st.markdown(md)
 
 option = st.radio("Click a country to see its international commitments and domestic policies", 
-                  ("🇨🇳China", "🇩🇪Germany","🇦🇺Australia","🇮🇳India","🇨🇦Canada"))
+                  ("🇨🇳China", "🇩🇪Germany","🇦🇺Australia","🇮🇳India","🇨🇦Canada","🇯🇵Japan","🇰🇷South Korea"))
 
 if st.button("Go"):
     if option == "🇨🇳China":
@@ -39,6 +39,11 @@ if st.button("Go"):
         policy("India")
     if option == "🇨🇦Canada":
         policy("Canada")
+    if option == "🇯🇵Japan":
+        policy("Japan")
+    if option == "🇰🇷South Korea":
+        policy("South Korea")
+    
     
 
 
