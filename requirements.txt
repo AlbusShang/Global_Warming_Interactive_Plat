@@ -7,5 +7,3 @@ h5netcdf
 matplotlib
 pydeck
 streamlit-deckgl
-re
-difflib
