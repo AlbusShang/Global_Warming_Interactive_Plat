@@ -1,0 +1,257 @@
+# pages/climate_dictionary.py
+# Streamlit multipage page: Climate Dictionary🔍
+
+import re
+import streamlit as st
+from difflib import SequenceMatcher
+
+st.set_page_config(page_title="Climate Dictionary🔍", page_icon="🔍", layout="wide")
+
+# ----------------------------
+# Data
+# ----------------------------
+TERMS = [
+    {
+        "term": "Keeling Curve",
+        "definition": (
+            "A curve that shows how the global atmospheric CO2 level is changing over time. "
+            "C. David Keeling initially made the curve in March 1958. Currently, the UCSD "
+            "Scripps Institute of Oceanography is responsible for updating the curve frequently. "
+            "The curve can be viewed at https://keelingcurve.ucsd.edu."
+        ),
+        "tags": ["CO2", "atmosphere", "observations", "time series"],
+    },
+    {
+        "term": "Greenhouse Gas (GHG)",
+        "definition": (
+            "Certain types of gases in the atmosphere, such as carbon dioxide, ozone, methane, "
+            "water vapor, and ammonia, can induce global warming. Due to the unique molecular "
+            "structure of these gases, they can absorb and emit long-wave radiation with high "
+            "efficiency. They absorb long-wave radiation from the surface and emit it back to "
+            "the surface. As a result, heat is trapped within the atmosphere, and the temperature goes up."
+        ),
+        "tags": ["radiation", "warming", "CO2", "methane"],
+    },
+    {
+        "term": "Paris Agreement",
+        "definition": (
+            "An international climate agreement adopted in December 2015 at COP21 in Paris. "
+            "Its main goal is to limit global temperature rise to well below 2°C above pre-industrial "
+            "levels, and to pursue efforts to limit warming to 1.5°C."
+        ),
+        "tags": ["COP21", "policy", "UNFCCC", "targets"],
+    },
+    {
+        "term": "Feedback",
+        "definition": (
+            "A process that can either amplify or reduce the effects of climate change, which can be "
+            "sorted into two types: positive and negative feedback. Positive Feedback is a process "
+            "that strengthens the original change. For example, when the global temperature rises, "
+            "ice melts. Ice has a higher albedo, which means it reflects more sunlight. When ice "
+            "disappears, darker ocean water absorbs more solar radiation, causing further warming. "
+            "Negative Feedback is a process that weakens the original change. For example, increased "
+            "plant growth due to higher CO₂ may absorb more carbon dioxide from the atmosphere, slightly reducing warming."
+        ),
+        "tags": ["positive feedback", "negative feedback", "ice-albedo"],
+    },
+    {
+        "term": "Albedo",
+        "definition": (
+            "The ability of a certain type of surface to reflect radiation. For example, if 100W of "
+            "solar radiation hits a surface and 35W is reflected (65W is absorbed), we say that the "
+            "albedo of this surface is 35/100, or 35%, or 0.35."
+        ),
+        "tags": ["reflection", "radiation", "surface"],
+    },
+    {
+        "term": "Hadley Cell",
+        "definition": (
+            "An atmospheric circulation cell that expands from the equator to 30 °N and 30 °S. "
+            "Warm air rises from the equator and flows to 30°, where it condenses and flows back to "
+            "the equator. Therefore, the Hadley Cell forms."
+        ),
+        "tags": ["circulation", "tropics", "subtropics"],
+    },
+    {
+        "term": "Ferrel Cell",
+        "definition": (
+            "An atmospheric circulation cell that expands from 30 °N/S to 60 °N/S. As the air "
+            "condenses at 30 ° (please refer to the Hadley Cell), it forms a high-pressure zone at "
+            "this latitude, which is called the “subtropical high”. In the meantime, there is a "
+            "“subpolar low” at 60 ° (please search for more definitions). Therefore, a circulation "
+            "forms: air condenses at 30 °, moves to 60 °, then rises again, and flows back to 30 °."
+        ),
+        "tags": ["circulation", "mid-latitudes", "subtropical high", "subpolar low"],
+    },
+    {
+        "term": "Polar Cell",
+        "definition": (
+            "The cold air at the two poles condenses and forms a high-pressure region. As there is "
+            "a subpolar low at 60 °, the Polar Cell forms: air rises at 60 °, moves to the pole, "
+            "condenses, and flows back to 60 °."
+        ),
+        "tags": ["circulation", "polar", "subpolar low"],
+    },
+    {
+        "term": "Pressure Gradient Force",
+        "definition": (
+            "Force of the wind. When there is a difference in pressure at two locations, a force "
+            "that points from the high-pressure to the low-pressure location forms. The larger the "
+            "difference between the two pressures, and the closer the two locations, the stronger "
+            "the force will be. This gradient force, together with the Coriolis Force and friction, "
+            "forms the wind we see today."
+        ),
+        "tags": ["wind", "pressure", "coriolis", "friction"],
+    },
+    {
+        "term": "El Niño",
+        "definition": (
+            "A climate phenomenon that occurs in the tropical Pacific Ocean. The trade winds weaken "
+            "or even reverse direction, and sea surface temperatures in the central and eastern "
+            "Pacific Ocean become warmer than normal. As a result, heavy rainfall may occur in "
+            "western South America, the Western Pacific may experience drought, and marine ecosystems "
+            "(particularly near Peru) can be disrupted. It usually develops every 2–7 years and can last about 9–12 months."
+        ),
+        "tags": ["ENSO", "Pacific", "trade winds", "SST"],
+    },
+    {
+        "term": "La Niña",
+        "definition": (
+            "The reverse form of El Niño. The trade winds become stronger than usual, and sea surface "
+            "temperatures in the central and eastern Pacific Ocean become cooler than normal. As a "
+            "result, heavy rainfall occurs around the Western Pacific while drought occurs around the East."
+        ),
+        "tags": ["ENSO", "Pacific", "trade winds", "SST"],
+    },
+    {
+        "term": "Troposhphere",
+        "definition": (
+            "The lowest layer of the atmosphere, extending from the sea level to about 10 km. In the "
+            "troposphere, warm air is at the lower level, and cooler air is at the upper level. Thus, "
+            "air convection forms and various weather exists, including rainfall, storms, and wind. "
+            "Typically, the air cools at a rate of 6.5 °C/km. The troposphere at a higher latitude is thinner than at a lower latitude."
+        ),
+        "tags": ["atmosphere", "weather", "lapse rate"],
+    },
+]
+
+# ----------------------------
+# Helpers
+# ----------------------------
+def normalize(s: str) -> str:
+    return (s or "").strip().lower()
+
+def similarity(a: str, b: str) -> float:
+    return SequenceMatcher(None, normalize(a), normalize(b)).ratio()
+
+def term_matches(query: str, item: dict) -> bool:
+    if not query:
+        return True
+    q = normalize(query)
+
+    hay = " ".join([
+        item["term"],
+        item.get("definition", ""),
+        " ".join(item.get("tags", [])),
+    ])
+    hay_n = normalize(hay)
+
+    # 1) substring partial match (fast fuzzy)
+    if q in hay_n:
+        return True
+
+    # 2) approximate match against term
+    if similarity(q, item["term"]) >= 0.55:
+        return True
+
+    # 3) approximate match against tags
+    for t in item.get("tags", []):
+        if similarity(q, t) >= 0.65:
+            return True
+
+    return False
+
+def highlight(text: str, query: str) -> str:
+    """Return HTML with query highlighted (case-insensitive)."""
+    if not query:
+        return text
+    q = query.strip()
+    if not q:
+        return text
+    pattern = re.compile(re.escape(q), re.IGNORECASE)
+    return pattern.sub(lambda m: f"<mark>{m.group(0)}</mark>", text)
+
+# ----------------------------
+# UI
+# ----------------------------
+st.title("Climate Dictionary🔍")
+st.caption("Click a term to expand its definition. Use the search bar for fuzzy search.")
+
+# NOTE: removed vertical_alignment for compatibility with older Streamlit
+col1, col2 = st.columns([2, 1])
+
+with col1:
+    query = st.text_input(
+        "Search terms (supports partial & fuzzy match)",
+        placeholder="e.g., 'keeling', 'greenhouse', 'ENSO', 'albe'...",
+    )
+
+with col2:
+    sort_mode = st.selectbox("Sort", ["Most relevant", "A → Z"], index=0)
+
+filtered = [t for t in TERMS if term_matches(query, t)]
+
+if sort_mode == "A → Z":
+    filtered = sorted(filtered, key=lambda x: x["term"].lower())
+else:
+    if query:
+        filtered = sorted(
+            filtered,
+            key=lambda x: max(
+                similarity(query, x["term"]),
+                similarity(query, " ".join(x.get("tags", []))),
+            ),
+            reverse=True,
+        )
+    else:
+        filtered = sorted(filtered, key=lambda x: x["term"].lower())
+
+st.divider()
+st.write(f"Showing **{len(filtered)}** / {len(TERMS)} terms")
+
+# "Click to locate" index (not true anchor jump, but easy to find)
+if filtered:
+    with st.expander("Quick Locate", expanded=False):
+        picked = st.selectbox(
+            "Choose a term to locate below",
+            [x["term"] for x in filtered],
+            index=0,
+        )
+        st.caption("Scroll down; the chosen term will be expanded automatically.")
+
+st.divider()
+
+# auto-open picked term if any
+picked_term = None
+try:
+    picked_term = picked  # exists only if expander ran
+except NameError:
+    picked_term = None
+
+for item in filtered:
+    open_by_default = (picked_term is not None and item["term"] == picked_term)
+
+    title_html = highlight(item["term"], query)
+    tags = item.get("tags", [])
+    tag_str = " · ".join(tags) if tags else ""
+
+    with st.expander(label=item["term"], expanded=open_by_default):
+        if tag_str:
+            st.caption(tag_str)
+
+        # highlight matches in definition as well
+        def_html = highlight(item.get("definition", "").strip(), query)
+        st.markdown(def_html, unsafe_allow_html=True)
+
+if not filtered:
+    st.warning("No matches found. Try a shorter keyword or a different spelling.")
