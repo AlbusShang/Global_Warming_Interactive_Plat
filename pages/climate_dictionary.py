@@ -222,6 +222,80 @@ TERMS = [
     ),
         "tags": ["atmospheric circulation", "climate system", "precipitation"],
 },
+    {
+    "term": "Stratosphere",
+    "definition": (
+        "The second-lowest layer of the atmosphere, extending from about 10 km to about 50 km in altitude. "
+        "In this layer, air flows mostly horizontally, making it ideal for airplanes to fly. "
+        "The upper part of the stratosphere contains the ozone layer, which absorbs harmful ultraviolet radiation "
+        "from the Sun and protects life on Earth. Unlike the troposphere, temperature increases with altitude in "
+        "the stratosphere."
+    ),
+    "tags": ["atmosphere", "ozone layer", "radiation"],
+},
+
+{
+    "term": "Mesosphere",
+    "definition": (
+        "The third layer of the atmosphere, located above the stratosphere and below the thermosphere. "
+        "In this layer, temperature decreases as altitude increases. "
+        "The mesosphere is also where most meteors burn up when entering the Earth's atmosphere."
+    ),
+    "tags": ["atmosphere", "temperature structure", "meteors"],
+},
+
+{
+    "term": "Thermosphere",
+    "definition": (
+        "The upper layer of the atmosphere above the mesosphere. "
+        "In this layer, temperature increases rapidly with altitude because gases absorb high-energy solar radiation. "
+        "The air is extremely thin, and many atoms become ionized, forming part of the ionosphere. "
+        "Auroras and many satellites orbit in this region."
+    ),
+    "tags": ["atmosphere", "ionosphere", "space environment"],
+},
+
+{
+    "term": "Solar Radiation",
+    "definition": (
+        "Electromagnetic radiation emitted by the Sun. Because of the Sun's extremely high surface temperature, "
+        "solar radiation contains relatively short wavelengths and high frequencies. "
+        "Solar radiation is the primary external energy source for the Earth and drives the climate system. "
+        "On average, the solar energy reaching the top of Earth's atmosphere is about 1368 W/m², known as the solar constant."
+    ),
+    "tags": ["radiation", "energy balance", "sun"],
+},
+
+{
+    "term": "Outgoing Longwave Radiation (OLR)",
+    "definition": (
+        "According to the Stefan–Boltzmann law, every object emits radiation depending on its temperature. "
+        "The Earth's surface emits longwave (infrared) radiation toward the atmosphere and space. "
+        "This emission is known as outgoing longwave radiation (OLR) and plays a key role in balancing incoming solar radiation. "
+        "The warmer the Earth's surface becomes, the more OLR it emits."
+    ),
+    "tags": ["radiation", "energy balance", "climate system"],
+},
+
+{
+    "term": "Ultraviolet Radiation (UV)",
+    "definition": (
+        "Electromagnetic radiation with higher frequency and shorter wavelength than visible light. "
+        "Exposure to ultraviolet radiation may cause sunburn, skin damage, and eye problems. "
+        "Much of the harmful UV radiation from the Sun is absorbed by the ozone layer in the stratosphere."
+    ),
+    "tags": ["radiation", "sun", "health"],
+},
+
+{
+    "term": "Infrared Radiation (IR)",
+    "definition": (
+        "Electromagnetic radiation with lower frequency and longer wavelength than visible light. "
+        "Infrared radiation is commonly associated with heat energy and is emitted by warm objects, "
+        "including the Earth's surface. It is widely used in thermal imaging and infrared thermometers."
+    ),
+    "tags": ["radiation", "heat", "energy"],
+}
 ]
 
 # ----------------------------

@@ -311,7 +311,7 @@ QUESTION_BANK = [
 		Because we can never measure initial conditions perfectly, 
 		chaotic systems appear unpredictable, even though they are not truly random."""
         ),
-    }，
+    },
 {
         "id": 25,
         "q": "Which of the following if the major energy source in the troposphere?",
