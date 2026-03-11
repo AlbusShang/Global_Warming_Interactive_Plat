@@ -4,7 +4,7 @@ import streamlit as st
 st.set_page_config(page_title="Climate Quiz (Smart Feedback)", layout="centered")
 st.title("🌍 Climate Change Quiz")
 st.caption(
-    "Choose 5 / 10 / 15 questions. If you answer correctly, you'll move on automatically. "
+    "Choose the number of questions you want to try. If you answer correctly, you'll move on automatically. "
     "If you answer incorrectly, you'll see the correct answer + explanation, then click Next."
 )
 
@@ -449,7 +449,7 @@ def go_next_question():
 # ----------------------------
 with st.sidebar:
     st.header("⚙️ Quiz Settings")
-    n_questions = st.radio("Choose number of questions", [5, 10, 15,20,24], index=1)
+    n_questions = st.radio("Choose number of questions", [5,10,15,20,25,30], index=1)
 
     if not st.session_state.quiz_started:
         if st.button("Start Quiz", use_container_width=True):
