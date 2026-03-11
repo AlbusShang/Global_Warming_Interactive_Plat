@@ -389,6 +389,6 @@ if st.button("Want to test how much I know about climate science and climate cha
     st.switch_page("pages/Climate_Quiz.py")
 
 if st.button("I don't know about a climate-related word→"):
-    st.switch_page("pages/climate_dictionary.py")
+    st.switch_page("pages/Climate_Dictionary.py")
 
 

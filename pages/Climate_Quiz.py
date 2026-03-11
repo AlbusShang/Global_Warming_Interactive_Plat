@@ -311,8 +311,84 @@ QUESTION_BANK = [
 		Because we can never measure initial conditions perfectly, 
 		chaotic systems appear unpredictable, even though they are not truly random."""
         ),
+    }，
+{
+        "id": 25,
+        "q": "Which of the following if the major energy source in the troposphere?",
+        "options": {"A": "Solar Radiation",
+ 			"B": "Longwave radiation from Earth's surface", 
+			"C": "Atmospheric back radiation"},
+        "answer": "B",
+        "explanation": (
+            """That is why in troposphere, cold air is at the top while warm air at the bottom."""
+        ),
+    },
+{
+        "id": 26,
+        "q": "What is a feature of the stratosphere?",
+        "options": {"A": "Ozone layer",
+ 			"B": "Nitrogen layer", 
+			"C": "Oxygen layer",
+			"D":"Carbon dioxide layer"},
+        "answer": "A",
+        "explanation": (
+            """The ozone layer can prevent ultraviolet radiation from harming people’s health."""
+        ),
+    },
+{
+        "id": 27,
+        "q": "What is a characteristic of infrared radiation?",
+        "options": {"A": "High frequency",
+ 			"B": "High intensity", 
+			"C": "Long wavelength",
+			"D":"High speed"},
+        "answer": "C",
+        "explanation": (
+            """IR has a lower frequency than visible lights. Thus, it has longer wavelength and lower intensity. """
+        ),
+    },
+{
+        "id": 28,
+        "q": "What is a characteristic of ultraviolet radiation?",
+        "options": {"A": "Low frequency",
+ 			"B": "High intensity", 
+			"C": "Long wavelength",
+			"D":"Low speed"},
+        "answer": "B",
+        "explanation": (
+            """UV has a higher frequency than visible lights. Thus, it has shorter wavelength and higher intensity. """
+        ),
+    },
+{
+        "id": 29,
+        "q": "Which of the following has the highest frequency?",
+        "options": {"A": "Radiowave",
+ 			"B": "Visible light", 
+			"C": "Gamma ray",
+			"D":"X ray"},
+        "answer": "C",
+        "explanation": (
+            """From high frequency to low frequency: Gamma Ray, X Ray, Visible Light, Radiowave."""
+        ),
+    },
+{
+        "id": 30,
+        "q": "When water decreases from 10oC to -10oC, what happens?",
+        "options": {"A":"It releases both latent heat and sensible heat",
+ 			"B": "It releases only sensible heat", 
+			"C": "It releases onlt latent heat",
+			"D":"It releases latent heat but absorbs sensible heat"},
+        "answer": "A",
+        "explanation": (
+            """
+                Because temperature decreases, it releases sensible heat; 
+                because phase also changes (liquid-solid), latent heat is also released. 
+"""
+        ),
     }
 ]
+
+
 
 # ----------------------------
 # Session state init

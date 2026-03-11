@@ -133,6 +133,95 @@ TERMS = [
         ),
         "tags": ["atmosphere", "weather", "lapse rate"],
     },
+    {
+        "term": "Wavelength",
+        "definition": (
+            "The distance between two identical points of a wave, such as two consecutive crests or troughs. "
+            "It is usually represented by the Greek letter λ (lambda) and measured in meters. "
+            "Radio waves have long wavelengths, visible light has medium wavelengths, and X-rays have very short wavelengths."
+    ),
+        "tags": ["waves", "radiation", "physics"],
+},
+
+{
+        "term": "Frequency",
+        "definition": (
+            "The number of wave cycles that pass a given point in one second. "
+            "It is usually represented by f and measured in Hertz (Hz). "
+            "Higher frequency means waves oscillate more rapidly. "
+            "For example, blue light has a higher frequency than red light. "
+            "For electromagnetic waves, a higher frequency means a shorter wavelength."
+    ),
+    "tags": ["waves", "radiation", "physics"],
+},
+
+{
+        "term": "Chaos",
+        "definition": (
+            "A property of some dynamic systems in which very small changes in initial conditions can lead "
+            "to large differences in outcomes. Although chaotic systems follow deterministic physical laws, "
+            "their behavior becomes extremely difficult to predict over long periods of time. "
+            "The atmosphere is considered a chaotic system, which is one reason why long-term weather "
+            "forecasting is challenging."
+    ),
+        "tags": ["climate dynamics", "chaos theory", "weather prediction"],
+},
+
+{
+        "term": "Butterfly Effect",
+        "definition": (
+            "A concept from chaos theory describing how a small change in a system can lead to large and "
+            "unpredictable consequences. The term was introduced by meteorologist Edward Lorenz while "
+            "studying atmospheric models. He suggested that a butterfly flapping its wings in Brazil "
+            "could eventually cause a tornado in Texas."
+    ),
+        "tags": ["chaos theory", "climate dynamics", "weather prediction"],
+},
+
+{
+        "term": "Stefan-Boltzmann Law",
+        "definition": (
+            "A physical law describing how much energy a body radiates depending on its temperature. "
+            "It states that the total energy radiated per unit surface area is proportional to the fourth "
+            "power of the temperature (measured in Kelvin). This law plays an important role in understanding "
+            "Earth's radiation balance and the greenhouse effect."
+    ),
+        "tags": ["radiation", "energy balance", "climate physics"],
+},
+
+{
+        "term": "Latent Heat",
+        "definition": (
+            "Heat related to the change of phase of a substance. For example, when ice melts into water, "
+            "it absorbs latent heat. When water vapor condenses into liquid water, it releases latent heat. "
+            "Latent heat is associated with phase change rather than temperature change."
+    ),
+        "tags": ["thermodynamics", "phase change", "energy cycle"],
+},
+
+{
+        "term": "Typhoon",
+        "definition": (
+            "A powerful tropical cyclone that forms in the northwestern Pacific Ocean. "
+            "Typhoons develop over warm ocean water and are characterized by strong rotating winds, "
+            "heavy rainfall, a calm central eye, and low atmospheric pressure. "
+            "Hurricanes have the same mechanism as typhoons but usually occur in the Atlantic Ocean "
+            "and eastern Pacific."
+    ),
+        "tags": ["weather", "tropical cyclone", "storms"],
+},
+
+{
+        "term": "Monsoon",
+        "definition": (
+            "A seasonal wind system that changes direction between summer and winter due to differences "
+            "in heating between land and ocean. The most famous example is the South Asian monsoon. "
+            "In summer, land heats faster than the ocean, creating low pressure over land, so moist air "
+            "flows from the ocean and brings heavy rainfall. In winter, the pattern reverses and dry "
+            "winds blow from land to the ocean."
+    ),
+        "tags": ["atmospheric circulation", "climate system", "precipitation"],
+},
 ]
 
 # ----------------------------
