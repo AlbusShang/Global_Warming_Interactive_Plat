@@ -2,6 +2,7 @@ import streamlit as st
 from pathlib import Path
 
 st.set_page_config(page_title="Climate Policies of Each Country", page_icon="📖", layout="wide")
+st.title("Climate Policies of Each Country")
 
 HERE = Path(__file__).resolve().parent  # pages/ 目录（Nation_Commitments.py 所在目录）
 
