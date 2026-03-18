@@ -295,6 +295,75 @@ TERMS = [
         "including the Earth's surface. It is widely used in thermal imaging and infrared thermometers."
     ),
     "tags": ["radiation", "heat", "energy"],
+},
+    {
+    "term": "Intertropical Convergence Zone (ITCZ)",
+    "definition": (
+        "A low-pressure zone near the equator where trade winds from the Northern and Southern Hemispheres converge. "
+        "In this region, warm and moist air rises, leading to frequent cloud formation and heavy rainfall. "
+        "The position of the ITCZ shifts north and south seasonally following the Sun, influencing tropical climates and monsoons."
+    ),
+    "tags": ["atmospheric circulation", "pressure system", "tropics"],
+},
+
+{
+    "term": "Subtropical High",
+    "definition": (
+        "A high-pressure belt located around 30° latitude in both hemispheres. "
+        "Air from the equator descends in this region, leading to dry and stable conditions. "
+        "Subtropical highs are associated with desert regions such as the Sahara and play an important role in global circulation patterns."
+    ),
+    "tags": ["atmospheric circulation", "pressure system", "desert"],
+},
+
+{
+    "term": "Subpolar Low",
+    "definition": (
+        "A low-pressure belt located around 60° latitude in both hemispheres. "
+        "It forms where cold polar air meets warmer mid-latitude air, causing air to rise. "
+        "This region is associated with frequent storms and strong weather systems, especially in the North Atlantic and North Pacific."
+    ),
+    "tags": ["atmospheric circulation", "pressure system", "storms"],
+},
+
+{
+    "term": "North Atlantic Deep Water (NADW)",
+    "definition": (
+        "A mass of cold, dense water formed in the North Atlantic Ocean, particularly near Greenland and Iceland. "
+        "It forms when surface water cools, becomes denser, and sinks to deep ocean layers. "
+        "NADW is a key component of global ocean circulation and helps transport heat and carbon around the planet."
+    ),
+    "tags": ["ocean circulation", "thermohaline circulation", "climate system"],
+},
+
+{
+    "term": "Atlantic Meridional Overturning Circulation (AMOC)",
+    "definition": (
+        "A large system of ocean currents in the Atlantic Ocean that transports warm surface water northward "
+        "and cold deep water southward. It includes the formation of North Atlantic Deep Water. "
+        "AMOC plays a crucial role in regulating climate, especially in Europe, by redistributing heat across the globe."
+    ),
+    "tags": ["ocean circulation", "global circulation", "climate system"],
+},
+
+{
+    "term": "El Niño–Southern Oscillation (ENSO)",
+    "definition": (
+        "A climate pattern in the tropical Pacific Ocean involving changes in sea surface temperature, "
+        "atmospheric pressure, and trade winds. ENSO has two main phases: El Niño (warming phase) and La Niña (cooling phase). "
+        "It is one of the most important sources of year-to-year climate variability and affects weather patterns worldwide."
+    ),
+    "tags": ["climate variability", "ocean-atmosphere interaction", "ENSO"],
+},
+
+{
+    "term": "Lapse Rate",
+    "definition": (
+        "The rate at which air temperature decreases with increasing altitude in the atmosphere. "
+        "The average environmental lapse rate in the troposphere is about 6.5 °C per kilometer. "
+        "Lapse rate is important for understanding atmospheric stability, cloud formation, and weather processes."
+    ),
+    "tags": ["atmosphere", "temperature", "weather"],
 }
 ]
 

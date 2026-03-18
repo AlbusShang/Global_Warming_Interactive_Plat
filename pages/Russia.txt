@@ -1,0 +1,46 @@
+# Country: Russian Federation (Russia, RUS)
+
+## Region: Eastern Europe / Northern Asia  
+## Status: Developed country  
+## Current leader: Vladimir Putin
+
+---
+
+## I. International Commitments
+
+Russia is a Party to the Paris Agreement and has submitted a second nationally determined contribution (NDC). Under this updated NDC, Russia aims to reduce greenhouse gas emissions to **65%–67% below 1990 levels by 2035**, taking into account the **maximum possible absorption capacity of forests and other ecosystems**.
+
+Russia has also adopted a long-term objective of achieving **carbon neutrality by 2060**.
+
+---
+
+## II. Domestic Policies
+
+Russia’s domestic climate policy framework includes the **Low Greenhouse Gas Emissions Development Strategy**, which sets out the broad pathway toward carbon neutrality by 2060.
+
+Government policy has emphasized measures such as **energy efficiency improvements**, the development of **electric transport**, and the use of **forest absorption** and other ecosystems as part of the national mitigation approach.
+
+At the same time, Russia’s climate policy remains closely tied to its existing fossil-fuel-based economic structure, and the role of land sinks continues to be especially important in how the country presents its emissions pathway.
+
+---
+
+## III. Are These Policies Sufficient?
+
+- Russia has adopted a formal long-term climate goal of **carbon neutrality by 2060** and has submitted a new 2035 NDC.
+
+- However, the design of its target relies heavily on **forest and ecosystem absorption**, which reduces pressure for deeper emissions cuts in energy and industry.
+
+- Independent assessments conclude that Russia’s target and policy framework do **not require sufficiently deep domestic reductions** in the near term.
+
+- Climate Action Tracker rates Russia’s overall climate action as **“Critically Insufficient”**, indicating that its targets and policies are far from being aligned with the Paris Agreement’s 1.5°C limit.
+
+- CAT also finds that Russia’s policy pathway remains weak even when compared with modelled domestic pathways, and that current action reflects only limited progress toward real decarbonisation.
+
+---
+
+## Sources
+
+- Kremlin: official website of the President of Russia  
+- UNFCCC: Russian Federation Second Nationally Determined Contribution  
+- Government of the Russian Federation: Low Greenhouse Gas Emissions Development Strategy  
+- Climate Action Tracker: Russian Federation Country Profile

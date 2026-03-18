@@ -1,0 +1,49 @@
+# Country: Republic of Singapore (Singapore, SGP)
+
+## Region: Southeast Asia  
+## Status: Developed country  
+## Current leader: Lawrence Wong
+
+---
+
+## I. International Commitments
+
+Singapore is a Party to the Paris Agreement and submitted its **2035 NDC** in 2025. Under this target, Singapore commits to reducing emissions to **45–50 MtCO2e by 2035**.
+
+This builds on its earlier **2030 NDC**, which aims to reduce emissions to around **60 MtCO2e by 2030** after peaking emissions earlier. Singapore has also adopted a long-term target of achieving **net-zero emissions by 2050**.
+
+---
+
+## II. Domestic Policies
+
+Singapore’s domestic climate strategy combines carbon pricing, energy efficiency, low-carbon technology development, and regional electricity cooperation.
+
+One of its central policy tools is the **carbon tax**. Singapore introduced Southeast Asia’s first economy-wide carbon tax and has raised it to **S$25/tCO2e in 2024–2025**, with a scheduled increase to **S$45/tCO2e in 2026–2027**, and a stated intention to reach **S$50–80/tCO2e by 2030**.
+
+Singapore is also pursuing low-carbon electricity imports, improvements in energy efficiency, and investment in emerging technologies such as **hydrogen** and **carbon capture and storage (CCS)**. Given its land and resource constraints, the government presents regional power trade and technology deployment as important parts of its transition strategy.
+
+---
+
+## III. Are These Policies Sufficient?
+
+- Singapore has a relatively clear set of quantified emissions targets for **2030, 2035, and 2050**.
+
+- Its carbon tax is one of the most developed climate policy instruments in Southeast Asia and provides a meaningful economy-wide signal for decarbonisation.
+
+- The country has also taken visible steps to update its targets and align its long-term pathway with net zero by 2050.
+
+- However, independent assessments still rate Singapore’s overall climate action as **“Highly Insufficient”** relative to the 1.5°C goal.
+
+- CAT notes that Singapore’s current targets and policies still imply emissions levels that are too high and decarbonisation that is too slow to be fully consistent with the Paris Agreement temperature limit.
+
+- A key challenge remains the country’s heavy dependence on imported fossil gas and its limited domestic renewable energy potential, which make deeper reductions harder without faster regional and technological transition.
+
+---
+
+## Sources
+
+- Prime Minister’s Office Singapore: official profile of Lawrence Wong  
+- National Climate Change Secretariat (NCCS): Singapore submits 2035 NDC  
+- NCCS: Singapore climate targets overview  
+- Ministry of Sustainability and the Environment: Carbon Pricing Act / climate policy pages  
+- Climate Action Tracker: Singapore Country Profile

@@ -1,0 +1,47 @@
+# Country: French Republic (France, FRA)
+
+## Region: Western Europe  
+## Status: Developed country  
+## Current leader: Emmanuel Macron
+
+---
+
+## I. International Commitments
+
+France is a Party to the Paris Agreement and, as a Member State of the European Union, participates in the EU’s nationally determined contribution (NDC). Under the current EU-wide commitment, France is bound by the collective target of achieving at least a **55% net reduction in greenhouse gas emissions by 2030 compared with 1990 levels**, together with the long-term objective of **climate neutrality by 2050**.
+
+France has also played a prominent role in international climate diplomacy and remains closely associated with multilateral efforts on mitigation, adaptation, and climate finance.
+
+---
+
+## II. Domestic Policies
+
+France’s domestic climate policy framework is anchored in the **National Low-Carbon Strategy (SNBC)**, which serves as the national roadmap for reducing greenhouse gas emissions and reaching **carbon neutrality by 2050**. The SNBC is linked to a system of carbon budgets that guide medium-term emissions reductions across sectors.
+
+In the energy sector, France benefits from a relatively low-carbon electricity mix because of its large **nuclear power** fleet. At the same time, the government is pursuing the expansion of renewable energy and broader energy transition planning through the **Multiannual Energy Programme (PPE)**.
+
+France has also adopted broader climate legislation, including the **Climate and Resilience Law**, and continues to promote decarbonisation in transport, buildings, industry, and agriculture.
+
+---
+
+## III. Are These Policies Sufficient?
+
+- France has a comparatively strong structural advantage in the power sector because a large share of its electricity is already generated from low-carbon sources, especially nuclear power.
+
+- The **SNBC** provides a clear long-term framework and sectoral direction for achieving carbon neutrality by 2050.
+
+- France’s domestic policy architecture is relatively comprehensive, combining carbon budgets, energy planning, and climate legislation.
+
+- However, progress has remained uneven across sectors, especially in **transport, buildings, and agriculture**, where emissions reductions have been more difficult to secure.
+
+- Because France acts through the EU’s collective climate target, international independent assessments generally evaluate it through the **EU framework**, which is currently rated **“Insufficient”** relative to the 1.5°C goal.
+
+---
+
+## Sources
+
+- Élysée: official profile of President Emmanuel Macron  
+- UNFCCC: Updated NDC of the European Union and its Member States  
+- French Ministry for Ecological Transition: Stratégie nationale bas-carbone (SNBC)  
+- French Ministry for Ecological Transition: Programmations pluriannuelles de l'énergie (PPE)  
+- Climate Action Tracker: EU Country Profile

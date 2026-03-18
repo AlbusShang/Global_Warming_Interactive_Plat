@@ -383,12 +383,18 @@ with col_right:
                 )
 
 if st.button("See how each country is acting in response to climate change →"):
-    st.switch_page("pages/Nation_Commitments.py")
+    st.switch_page("pages/Climate_Policy.py")
 
 if st.button("Want to test how much I know about climate science and climate change→"):
     st.switch_page("pages/Climate_Quiz.py")
 
 if st.button("I don't know about a climate-related word→"):
     st.switch_page("pages/Climate_Dictionary.py")
+
+if st.button("I want to do some climate-related virtual experiments→"):
+    st.switch_page("pages/Climate_Lab.py")
+
+if st.button("I want to read some climate related news→"):
+    st.switch_page("pages/Climate_News.py")
 
 

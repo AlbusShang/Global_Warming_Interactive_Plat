@@ -1,7 +1,7 @@
 import streamlit as st
 from pathlib import Path
 
-st.title("How each country is acting?")
+st.set_page_config(page_title="Climate Policies of Each Country", page_icon="📖", layout="wide")
 
 HERE = Path(__file__).resolve().parent  # pages/ 目录（Nation_Commitments.py 所在目录）
 
@@ -26,7 +26,7 @@ def policy(country: str, txt_dir: Path = HERE, expanded: bool = False):
         st.markdown(md)
 
 option = st.radio("Click a country to see its international commitments and domestic policies", 
-                  ("🇨🇳China", "🇩🇪Germany","🇦🇺Australia","🇮🇳India","🇨🇦Canada","🇯🇵Japan","🇰🇷South Korea"))
+                  ("🇨🇳China", "🇩🇪Germany","🇦🇺Australia","🇮🇳India","🇨🇦Canada","🇯🇵Japan","🇰🇷South Korea","🇫🇷France","🇸🇬Singapore","🇧🇷Brazil","🇷🇺Russia"))
 
 if st.button("Go"):
     if option == "🇨🇳China":
@@ -43,6 +43,14 @@ if st.button("Go"):
         policy("Japan")
     if option == "🇰🇷South Korea":
         policy("South Korea")
+    if option == "🇫🇷France":
+        policy("France")
+    if option == "🇧🇷Brazil":
+        policy("Brazil")
+    if option == "🇷🇺Russia":
+        policy("Russia")
+    if option == "🇸🇬Singapore":
+        policy("Singapore")
     
     
 
