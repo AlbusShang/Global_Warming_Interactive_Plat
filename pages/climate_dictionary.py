@@ -364,6 +364,152 @@ TERMS = [
         "Lapse rate is important for understanding atmospheric stability, cloud formation, and weather processes."
     ),
     "tags": ["atmosphere", "temperature", "weather"],
+},
+    {
+    "term": "Carbon Neutrality",
+    "definition": (
+        "A state in which the amount of carbon dioxide emitted into the atmosphere is balanced by the amount removed. "
+        "This can be achieved by reducing emissions and increasing carbon absorption through forests, oceans, or carbon capture technologies. "
+        "Carbon neutrality is an important goal in mitigating climate change."
+    ),
+    "tags": ["climate policy", "carbon cycle", "sustainability"],
+},
+
+{
+    "term": "Flood",
+    "definition": (
+        "An overflow of water that submerges land that is usually dry. "
+        "Floods can be caused by heavy rainfall, river overflow, storm surges, or rapid snowmelt. "
+        "They can lead to significant damage to infrastructure, agriculture, and human life."
+    ),
+    "tags": ["natural hazard", "water", "weather"],
+},
+
+{
+    "term": "Waterlogging",
+    "definition": (
+        "A condition in which soil becomes saturated with water, reducing oxygen availability to plant roots. "
+        "Waterlogging can harm crops and vegetation and often occurs after prolonged rainfall or poor drainage."
+    ),
+    "tags": ["agriculture", "soil", "water"],
+},
+
+{
+    "term": "Hydrosphere",
+    "definition": (
+        "All the water on Earth, including oceans, rivers, lakes, groundwater, glaciers, and water vapor in the atmosphere. "
+        "The hydrosphere interacts with the atmosphere, lithosphere, and biosphere in the Earth system."
+    ),
+    "tags": ["earth system", "water", "climate system"],
+},
+
+{
+    "term": "Salinity",
+    "definition": (
+        "The concentration of dissolved salts in water, usually measured in parts per thousand (‰). "
+        "Salinity affects ocean density, circulation, and marine ecosystems."
+    ),
+    "tags": ["ocean", "water properties", "climate system"],
+},
+
+{
+    "term": "Tide",
+    "definition": (
+        "The regular rise and fall of sea level caused by the gravitational pull of the Moon and the Sun. "
+        "Tides influence coastal environments, navigation, and marine life."
+    ),
+    "tags": ["ocean", "gravity", "coastal processes"],
+},
+
+{
+    "term": "Storm Surge",
+    "definition": (
+        "A sudden rise in sea level caused by strong winds and low pressure during storms such as hurricanes or typhoons. "
+        "Storm surges can lead to severe coastal flooding and damage."
+    ),
+    "tags": ["natural hazard", "coastal", "storms"],
+},
+
+{
+    "term": "Red Tide",
+    "definition": (
+        "A harmful algal bloom in which certain types of algae grow rapidly and discolor the water, often appearing red. "
+        "Some red tides produce toxins that can harm marine life, humans, and ecosystems."
+    ),
+    "tags": ["ocean", "ecosystem", "pollution"],
+},
+
+{
+    "term": "Cold Front",
+    "definition": (
+        "A boundary where a cold air mass moves toward and replaces a warm air mass. "
+        "Cold fronts often bring sudden temperature drops, strong winds, and heavy precipitation."
+    ),
+    "tags": ["weather", "fronts", "atmosphere"],
+},
+
+{
+    "term": "Warm Front",
+    "definition": (
+        "A boundary where a warm air mass moves over a retreating cold air mass. "
+        "Warm fronts usually bring gradual temperature increases and steady precipitation."
+    ),
+    "tags": ["weather", "fronts", "atmosphere"],
+},
+
+{
+    "term": "Quasi-stationary Front",
+    "definition": (
+        "A boundary between two air masses that remains nearly stationary over time. "
+        "It can lead to prolonged periods of cloudiness and precipitation in the same area."
+    ),
+    "tags": ["weather", "fronts", "atmosphere"],
+},
+
+{
+    "term": "Cold Wave",
+    "definition": (
+        "A prolonged period of unusually cold weather, often caused by the movement of cold air masses from higher latitudes. "
+        "Cold waves can affect agriculture, infrastructure, and human health."
+    ),
+    "tags": ["weather", "extreme events", "climate"],
+},
+
+{
+    "term": "Carbon Cycle",
+    "definition": (
+        "The process by which carbon is exchanged among the atmosphere, oceans, soil, and living organisms. "
+        "Key processes include photosynthesis, respiration, decomposition, and combustion. "
+        "The carbon cycle plays a central role in regulating Earth's climate."
+    ),
+    "tags": ["biogeochemical cycle", "climate system", "carbon"],
+},
+
+{
+    "term": "Green Energy",
+    "definition": (
+        "Energy generated from renewable and environmentally friendly sources such as solar, wind, hydro, and geothermal power. "
+        "Green energy produces little or no greenhouse gas emissions."
+    ),
+    "tags": ["energy", "sustainability", "climate"],
+},
+
+{
+    "term": "Electric Vehicle",
+    "definition": (
+        "A vehicle powered by electricity instead of fossil fuels. "
+        "Electric vehicles reduce greenhouse gas emissions and air pollution, especially when powered by renewable energy sources."
+    ),
+    "tags": ["transportation", "energy", "sustainability"],
+},
+
+{
+    "term": "Mediterranean Climate",
+    "definition": (
+        "A type of climate characterized by hot, dry summers and mild, wet winters. "
+        "It is typically found on the western sides of continents between 30° and 40° latitude, such as around the Mediterranean Sea, California, and parts of Australia."
+    ),
+    "tags": ["climate", "regional climate", "precipitation"],
 }
 ]
 
