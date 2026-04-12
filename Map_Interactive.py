@@ -362,6 +362,8 @@ with col_right:
 
     # ---- Colorbar & slice info ----
     st.markdown("**Colorbar**")
+    st.write("DEBUG:", "mode=", mode, "year=", year, "vmin=", vmin, "vmax=", vmax)
+
     fig_cb = draw_colorbar(vmin, vmax, cmap_name)
     st.pyplot(fig_cb, clear_figure=True, use_container_width=False)
 
