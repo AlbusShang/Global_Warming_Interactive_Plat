@@ -324,7 +324,7 @@ with col_right:
 
     st.subheader(title)
 
-        poly_layer = pdk.Layer(
+    poly_layer = pdk.Layer(
         "PolygonLayer",
         id="temp_grid",
         data=df_poly.to_dict("records"),
