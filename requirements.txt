@@ -7,5 +7,6 @@ h5netcdf
 matplotlib
 pydeck
 streamlit-deckgl
+streamlit==1.44.1
 pandas<3
 pydeck==0.9.1
