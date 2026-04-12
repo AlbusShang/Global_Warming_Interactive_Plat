@@ -7,4 +7,3 @@ h5netcdf==1.6.1
 matplotlib==3.9.2
 pydeck==0.9.1
 streamlit-deckgl==0.3.0
-io
