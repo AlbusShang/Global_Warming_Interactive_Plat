@@ -42,13 +42,7 @@ def draw_colorbar(vmin, vmax, cmap_name="turbo"):
     norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
     cb = mpl.colorbar.ColorbarBase(ax, cmap=cmap, norm=norm, orientation="horizontal")
     cb.set_label("Temperature (°C)")
-
-    buf = io.BytesIO()
-    fig.savefig(buf, format="png", bbox_inches="tight")
-    plt.close(fig)
-    buf.seek(0)
-
-    return buf
+    return fig
 
 
 def file_for_mode(mode):
@@ -157,7 +151,13 @@ def grid_to_polygons(lat, lon, temp_c, cmap_name="turbo"):
             ]
 
             records.append(
-                {"polygon": poly, "temp_c": val, "fill_color": [r, g, b, 190]}
+                {
+                    "polygon": poly,
+                    "temp_c": val,
+                    "fill_color": [r, g, b, 190],
+                    "center_lat": float(lat[i]),
+                    "center_lon": float(lon[j]),
+                }
             )
 
     df_poly = pd.DataFrame.from_records(records)
@@ -324,8 +324,9 @@ with col_right:
 
     st.subheader(title)
 
-    poly_layer = pdk.Layer(
+        poly_layer = pdk.Layer(
         "PolygonLayer",
+        id="temp_grid",
         data=df_poly.to_dict("records"),
         get_polygon="polygon",
         pickable=True,
@@ -351,13 +352,18 @@ with col_right:
         tooltip=tooltip,
     )
 
-    # ✅ 监听 click 事件（返回事件 payload）
-    st.pydeck_chart(deck, height=560)
-    event = None
+    event = st.pydeck_chart(
+        deck,
+        height=560,
+        on_select="rerun",
+        selection_mode="single-object",
+        key="main_temp_map",
+    )
 
     # ---- Colorbar & slice info ----
     st.markdown("**Colorbar**")
-    st.image(draw_colorbar(vmin, vmax, cmap_name))
+    fig_cb = draw_colorbar(vmin, vmax, cmap_name)
+    st.pyplot(fig_cb, clear_figure=True, use_container_width=False)
 
     with st.expander("Current slice info"):
         st.write(pd.Series(df_poly["temp_c"]).describe(percentiles=[0.05, 0.5, 0.95]))
@@ -368,10 +374,16 @@ with col_right:
     st.markdown("---")
     st.subheader("📈 Temperature trend at clicked location (1940–2024)")
 
-    clicked = parse_click_latlon(event)
+    selected = None
 
-    if clicked is not None:
-        st.session_state["clicked_lat"], st.session_state["clicked_lon"] = clicked
+    if event and "selection" in event:
+        objs = event["selection"].get("objects", {})
+        if "temp_grid" in objs and len(objs["temp_grid"]) > 0:
+            selected = objs["temp_grid"][0]
+
+    if selected is not None:
+        st.session_state["clicked_lat"] = float(selected["center_lat"])
+        st.session_state["clicked_lon"] = float(selected["center_lon"])
     else:
         st.write("Raw click event:", event)
 
