@@ -6,6 +6,7 @@ import pydeck as pdk
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from pathlib import Path
+import io
 
 # ✅ 用于 deck.gl click 事件回传
 #from streamlit_deckgl import st_deckgl
@@ -41,7 +42,13 @@ def draw_colorbar(vmin, vmax, cmap_name="turbo"):
     norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
     cb = mpl.colorbar.ColorbarBase(ax, cmap=cmap, norm=norm, orientation="horizontal")
     cb.set_label("Temperature (°C)")
-    return fig
+
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png", bbox_inches="tight")
+    plt.close(fig)
+    buf.seek(0)
+
+    return buf
 
 
 def file_for_mode(mode):
@@ -337,7 +344,7 @@ with col_right:
 
     # ---- Colorbar & slice info ----
     st.markdown("**Colorbar**")
-    st.pyplot(draw_colorbar(vmin, vmax, cmap_name), use_container_width=False)
+    st.image(draw_colorbar(vmin, vmax, cmap_name))
 
     with st.expander("Current slice info"):
         st.write(pd.Series(df_poly["temp_c"]).describe(percentiles=[0.05, 0.5, 0.95]))
