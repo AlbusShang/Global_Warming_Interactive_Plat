@@ -222,28 +222,41 @@ def plot_timeseries(years, temps_c, mode, nearest_lat, nearest_lon):
 def parse_click_latlon(event_dict):
     """
     尽量兼容不同 deck.gl 事件 payload 格式。
-    目标：返回 (lat, lon) 或 None
+    返回 (lat, lon) 或 None
     """
     if not isinstance(event_dict, dict):
         return None
 
-    # 常见：{'coordinate': [lon, lat, ...]}
-    coord = event_dict.get("coordinate")
-    if isinstance(coord, (list, tuple)) and len(coord) >= 2:
-        lon, lat = coord[0], coord[1]
-        return float(lat), float(lon)
+    # 可能事件被包在 click / event / data 里
+    candidates = [event_dict]
+    for key in ["click", "event", "data"]:
+        if isinstance(event_dict.get(key), dict):
+            candidates.append(event_dict[key])
 
-    # 有些会叫 lngLat: [lng, lat]
-    lnglat = event_dict.get("lngLat") or event_dict.get("lnglat")
-    if isinstance(lnglat, (list, tuple)) and len(lnglat) >= 2:
-        lon, lat = lnglat[0], lnglat[1]
-        return float(lat), float(lon)
+    for obj in candidates:
+        # 常见：{'coordinate': [lon, lat, ...]}
+        coord = obj.get("coordinate")
+        if isinstance(coord, (list, tuple)) and len(coord) >= 2:
+            lon, lat = coord[0], coord[1]
+            return float(lat), float(lon)
 
-    # 兜底：直接提供 lat/lon
-    if "lat" in event_dict and "lon" in event_dict:
-        return float(event_dict["lat"]), float(event_dict["lon"])
-    if "latitude" in event_dict and "longitude" in event_dict:
-        return float(event_dict["latitude"]), float(event_dict["longitude"])
+        # 有些会叫 lngLat / lnglat
+        lnglat = obj.get("lngLat") or obj.get("lnglat")
+        if isinstance(lnglat, (list, tuple)) and len(lnglat) >= 2:
+            lon, lat = lnglat[0], lnglat[1]
+            return float(lat), float(lon)
+
+        # 直接给经纬度
+        if "lat" in obj and "lon" in obj:
+            return float(obj["lat"]), float(obj["lon"])
+        if "latitude" in obj and "longitude" in obj:
+            return float(obj["latitude"]), float(obj["longitude"])
+
+        # 有些 object 里会带 position / coordinates
+        position = obj.get("position") or obj.get("coordinates")
+        if isinstance(position, (list, tuple)) and len(position) >= 2:
+            lon, lat = position[0], position[1]
+            return float(lat), float(lon)
 
     return None
 
@@ -356,8 +369,11 @@ with col_right:
     st.subheader("📈 Temperature trend at clicked location (1940–2024)")
 
     clicked = parse_click_latlon(event)
+
     if clicked is not None:
         st.session_state["clicked_lat"], st.session_state["clicked_lon"] = clicked
+    else:
+        st.write("Raw click event:", event)
 
     if "clicked_lat" not in st.session_state:
         st.info("Please select a point on the map above.")
