@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 
 # ✅ 用于 deck.gl click 事件回传
-from streamlit_deckgl import st_deckgl
+#from streamlit_deckgl import st_deckgl
 
 st.set_page_config(page_title="🌍 Interactive Map for Global Warming", layout="wide")
 
@@ -306,7 +306,7 @@ with col_right:
 
     poly_layer = pdk.Layer(
         "PolygonLayer",
-        data=df_poly,
+        data=df_poly.to_dict("records"),
         get_polygon="polygon",
         pickable=True,
         filled=True,
@@ -332,7 +332,8 @@ with col_right:
     )
 
     # ✅ 监听 click 事件（返回事件 payload）
-    event = st_deckgl(deck, height=560, key="main_deck", events=["click"])
+    st.pydeck_chart(deck, height=560)
+    event = None
 
     # ---- Colorbar & slice info ----
     st.markdown("**Colorbar**")
