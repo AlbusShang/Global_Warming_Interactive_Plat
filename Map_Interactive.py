@@ -361,11 +361,10 @@ with col_right:
     )
 
     # ---- Colorbar & slice info ----
-    st.markdown("**Colorbar**")
-    st.write("DEBUG:", "mode=", mode, "year=", year, "vmin=", vmin, "vmax=", vmax)
+    """st.markdown("**Colorbar**")
 
     fig_cb = draw_colorbar(vmin, vmax, cmap_name)
-    st.pyplot(fig_cb, clear_figure=True, use_container_width=False)
+    st.pyplot(fig_cb, clear_figure=True, use_container_width=False)"""
 
     with st.expander("Current slice info"):
         st.write(pd.Series(df_poly["temp_c"]).describe(percentiles=[0.05, 0.5, 0.95]))
