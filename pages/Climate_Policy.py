@@ -38,7 +38,10 @@ countries = {
     "🇯🇵Japan": "Japan",
     "🇰🇷South Korea": "South Korea",
     "🇷🇺Russia": "Russia",
-    "🇸🇬Singapore": "Singapore"
+    "🇸🇬Singapore": "Singapore",
+    "🇬🇧UK":"UK",
+    "🇸🇦SaudiArabia":"SaudiArabia",
+    "🇲🇽Mexico":"Mexico"
 }
 
 # 按字母排序
