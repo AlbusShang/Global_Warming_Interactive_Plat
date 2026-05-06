@@ -26,34 +26,28 @@ def policy(country: str, txt_dir: Path = HERE, expanded: bool = False):
 
         st.markdown(md)
 
-option = st.radio("Click a country to see its international commitments and domestic policies", 
-                  ("🇨🇳China", "🇩🇪Germany","🇦🇺Australia","🇮🇳India","🇨🇦Canada","🇯🇵Japan","🇰🇷South Korea","🇫🇷France","🇸🇬Singapore","🇧🇷Brazil","🇷🇺Russia"))
+# 国家列表（显示名称 -> 文件名称）
+countries = {
+    "🇦🇺Australia": "Australia",
+    "🇧🇷Brazil": "Brazil",
+    "🇨🇦Canada": "Canada",
+    "🇨🇳China": "China",
+    "🇫🇷France": "France",
+    "🇩🇪Germany": "Germany",
+    "🇮🇳India": "India",
+    "🇯🇵Japan": "Japan",
+    "🇰🇷South Korea": "South Korea",
+    "🇷🇺Russia": "Russia",
+    "🇸🇬Singapore": "Singapore"
+}
+
+# 按字母排序
+sorted_options = sorted(countries.keys(), key=lambda x: x.split("🇦🇺")[-1])
+
+option = st.radio(
+    "Click a country to see its international commitments and domestic policies",
+    sorted_options
+)
 
 if st.button("Go"):
-    if option == "🇨🇳China":
-        policy("China")
-    if option == "🇩🇪Germany":
-        policy("Germany")
-    if option == "🇦🇺Australia":
-        policy("Australia")
-    if option == "🇮🇳India":
-        policy("India")
-    if option == "🇨🇦Canada":
-        policy("Canada")
-    if option == "🇯🇵Japan":
-        policy("Japan")
-    if option == "🇰🇷South Korea":
-        policy("South Korea")
-    if option == "🇫🇷France":
-        policy("France")
-    if option == "🇧🇷Brazil":
-        policy("Brazil")
-    if option == "🇷🇺Russia":
-        policy("Russia")
-    if option == "🇸🇬Singapore":
-        policy("Singapore")
-    
-    
-
-
-
+    policy(countries[option])
