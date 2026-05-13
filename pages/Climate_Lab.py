@@ -88,6 +88,51 @@ def run_ice_albedo_simulation(
 
 
 # -----------------------------
+# Sea Level Rise Model Functions
+# -----------------------------
+def run_sea_level_rise_simulation(
+    years,
+    initial_sea_level,
+    warming_rate,
+    thermal_expansion_rate,
+    glacier_melt_rate,
+    ice_sheet_melt_rate,
+    local_subsidence_rate,
+    storm_surge_height
+):
+    records = []
+
+    sea_level = initial_sea_level
+    temperature_anomaly = 0.0
+
+    for year in range(years + 1):
+        # Temperature anomaly increases gradually according to the chosen warming rate.
+        temperature_anomaly = warming_rate * year
+
+        # Sea level components, in meters.
+        thermal_expansion = thermal_expansion_rate * temperature_anomaly * year / 1000
+        glacier_melt = glacier_melt_rate * temperature_anomaly * year / 1000
+        ice_sheet_melt = ice_sheet_melt_rate * (temperature_anomaly ** 1.3) * year / 1000
+        local_subsidence = local_subsidence_rate * year / 1000
+
+        sea_level = initial_sea_level + thermal_expansion + glacier_melt + ice_sheet_melt + local_subsidence
+        extreme_water_level = sea_level + storm_surge_height
+
+        records.append({
+            "Year": year,
+            "Temperature Anomaly (°C)": temperature_anomaly,
+            "Thermal Expansion (m)": thermal_expansion,
+            "Glacier Melt Contribution (m)": glacier_melt,
+            "Ice Sheet Contribution (m)": ice_sheet_melt,
+            "Local Subsidence Contribution (m)": local_subsidence,
+            "Relative Sea Level Rise (m)": sea_level,
+            "Extreme Water Level with Storm Surge (m)": extreme_water_level,
+        })
+
+    return pd.DataFrame(records)
+
+
+# -----------------------------
 # Urban Heat Island Model Functions
 # -----------------------------
 def run_urban_heat_island_simulation(
@@ -162,7 +207,7 @@ def show_climate_lab():
         "Choose an experiment",
         [
             "Ice-Albedo Feedback",
-            "Sea Level Rise (Coming Soon)",
+            "Sea Level Rise",
             "Urban Heat Island",
         ],
         index=0
@@ -172,11 +217,8 @@ def show_climate_lab():
 
     if experiment == "Ice-Albedo Feedback":
         show_ice_albedo_lab()
-    elif experiment == "Sea Level Rise (Coming Soon)":
-        show_coming_soon_lab(
-            title="🌊 Sea Level Rise Lab",
-            description="Estimate how warming may affect sea level and coastal risk."
-        )
+    elif experiment == "Sea Level Rise":
+        show_sea_level_rise_lab()
     elif experiment == "Urban Heat Island":
         show_urban_heat_island_lab()
 
@@ -488,6 +530,328 @@ def show_ice_albedo_lab():
 
     st.warning(
         "Model limitation: This lab intentionally simplifies the climate system. It does not include clouds, ocean circulation, regional climate differences, seasonal cycles, aerosols, or detailed greenhouse gas chemistry."
+    )
+
+
+# -----------------------------
+# Sea Level Rise Lab Page
+# -----------------------------
+def show_sea_level_rise_lab():
+    st.header("🌊 Sea Level Rise Lab")
+    st.caption("Explore how warming, land subsidence, and storm surge can increase coastal flood risk.")
+
+    st.markdown(
+        """
+        **Sea level rise** is caused by several processes, including thermal expansion of seawater,
+        melting mountain glaciers, melting ice sheets, and local land subsidence.
+        In this lab, students can adjust these factors and observe how coastal flood risk changes over time.
+        """
+    )
+
+    st.subheader("Experiment Parameters")
+
+    with st.expander("Adjust model parameters", expanded=True):
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            simulation_years = st.slider(
+                "Simulation Length (years)",
+                min_value=20,
+                max_value=150,
+                value=100,
+                step=10,
+                key="slr_years"
+            )
+
+            warming_rate = st.slider(
+                "Warming Rate (°C/year)",
+                min_value=0.000,
+                max_value=0.050,
+                value=0.020,
+                step=0.001,
+                key="slr_warming_rate",
+                help="A simplified rate of global temperature increase. 0.020 °C/year means about +2.0 °C in 100 years."
+            )
+
+            initial_sea_level = st.slider(
+                "Initial Relative Sea Level Rise (m)",
+                min_value=0.0,
+                max_value=0.5,
+                value=0.0,
+                step=0.01,
+                key="slr_initial"
+            )
+
+        with col2:
+            thermal_expansion_rate = st.slider(
+                "Thermal Expansion Sensitivity (mm/year/°C)",
+                min_value=0.0,
+                max_value=4.0,
+                value=1.4,
+                step=0.1,
+                key="slr_thermal",
+                help="Warmer ocean water expands, raising sea level."
+            )
+
+            glacier_melt_rate = st.slider(
+                "Glacier Melt Sensitivity (mm/year/°C)",
+                min_value=0.0,
+                max_value=5.0,
+                value=1.8,
+                step=0.1,
+                key="slr_glacier",
+                help="Mountain glaciers lose mass as temperature rises."
+            )
+
+            ice_sheet_melt_rate = st.slider(
+                "Ice Sheet Melt Sensitivity (mm/year/°C^1.3)",
+                min_value=0.0,
+                max_value=4.0,
+                value=1.0,
+                step=0.1,
+                key="slr_ice_sheet",
+                help="A simplified nonlinear term for Greenland and Antarctic ice sheet contribution."
+            )
+
+        with col3:
+            local_subsidence_rate = st.slider(
+                "Local Land Subsidence (mm/year)",
+                min_value=0.0,
+                max_value=20.0,
+                value=3.0,
+                step=0.5,
+                key="slr_subsidence",
+                help="Some coastal cities sink because of groundwater extraction, sediment compaction, or tectonic factors."
+            )
+
+            storm_surge_height = st.slider(
+                "Storm Surge Height (m)",
+                min_value=0.0,
+                max_value=5.0,
+                value=1.5,
+                step=0.1,
+                key="slr_surge",
+                help="Temporary sea level rise during storms, typhoons, hurricanes, or cyclones."
+            )
+
+            protection_height = st.slider(
+                "Coastal Protection Height (m)",
+                min_value=0.0,
+                max_value=6.0,
+                value=2.5,
+                step=0.1,
+                key="slr_protection",
+                help="A simplified height of seawalls, dunes, levees, or other flood defenses."
+            )
+
+    df = run_sea_level_rise_simulation(
+        years=simulation_years,
+        initial_sea_level=initial_sea_level,
+        warming_rate=warming_rate,
+        thermal_expansion_rate=thermal_expansion_rate,
+        glacier_melt_rate=glacier_melt_rate,
+        ice_sheet_melt_rate=ice_sheet_melt_rate,
+        local_subsidence_rate=local_subsidence_rate,
+        storm_surge_height=storm_surge_height
+    )
+
+    final = df.iloc[-1]
+    max_extreme_water = df["Extreme Water Level with Storm Surge (m)"].max()
+    protection_gap = protection_height - max_extreme_water
+
+    st.subheader("Final Simulation Results")
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        st.metric(
+            "Final Sea Level Rise",
+            f"{final['Relative Sea Level Rise (m)']:.2f} m",
+            delta=f"after {simulation_years} years"
+        )
+
+    with col2:
+        st.metric(
+            "Extreme Water Level",
+            f"{final['Extreme Water Level with Storm Surge (m)']:.2f} m",
+            delta="sea level + storm surge"
+        )
+
+    with col3:
+        st.metric(
+            "Final Warming",
+            f"+{final['Temperature Anomaly (°C)']:.2f} °C"
+        )
+
+    with col4:
+        st.metric(
+            "Protection Gap",
+            f"{protection_gap:+.2f} m",
+            delta="positive means safer margin"
+        )
+
+    if protection_gap > 1.0:
+        risk_status = "Low"
+        risk_text = "Coastal protection remains well above the simulated extreme water level."
+    elif protection_gap > 0:
+        risk_status = "Moderate"
+        risk_text = "The safety margin is small. Stronger storms or faster sea level rise could create flood risk."
+    else:
+        risk_status = "High"
+        risk_text = "The simulated extreme water level exceeds the protection height. Flooding becomes likely in this simplified model."
+
+    st.info(f"**Coastal Flood Risk: {risk_status}** — {risk_text}")
+
+    st.subheader("Time Series")
+
+    tab1, tab2, tab3 = st.tabs([
+        "Sea Level Rise",
+        "Extreme Water Level",
+        "Component Contributions"
+    ])
+
+    with tab1:
+        fig, ax = plt.subplots(figsize=(9, 4.8))
+        ax.plot(df["Year"], df["Relative Sea Level Rise (m)"], linewidth=2)
+        ax.set_xlabel("Year")
+        ax.set_ylabel("Relative Sea Level Rise (m)")
+        ax.set_title("Relative Sea Level Rise Over Time")
+        ax.grid(True, alpha=0.3)
+        st.pyplot(fig)
+
+    with tab2:
+        fig, ax = plt.subplots(figsize=(9, 4.8))
+        ax.plot(df["Year"], df["Extreme Water Level with Storm Surge (m)"], linewidth=2, label="Extreme Water Level")
+        ax.axhline(protection_height, linestyle="--", linewidth=2, label="Coastal Protection Height")
+        ax.set_xlabel("Year")
+        ax.set_ylabel("Water Level (m)")
+        ax.set_title("Extreme Water Level vs Coastal Protection")
+        ax.legend()
+        ax.grid(True, alpha=0.3)
+        st.pyplot(fig)
+
+    with tab3:
+        final_contributions = pd.DataFrame({
+            "Component": [
+                "Thermal Expansion",
+                "Glacier Melt",
+                "Ice Sheet Melt",
+                "Local Subsidence"
+            ],
+            "Contribution (m)": [
+                final["Thermal Expansion (m)"],
+                final["Glacier Melt Contribution (m)"],
+                final["Ice Sheet Contribution (m)"],
+                final["Local Subsidence Contribution (m)"],
+            ]
+        })
+
+        fig, ax = plt.subplots(figsize=(9, 4.8))
+        ax.bar(final_contributions["Component"], final_contributions["Contribution (m)"])
+        ax.set_ylabel("Contribution to Relative Sea Level Rise (m)")
+        ax.set_title("Final Sea Level Rise Contributions")
+        ax.tick_params(axis="x", rotation=20)
+        ax.grid(True, axis="y", alpha=0.3)
+        st.pyplot(fig)
+
+    st.subheader("Simplified Coastal Cross-Section")
+
+    selected_year = st.slider(
+        "Choose a year to visualize",
+        min_value=0,
+        max_value=simulation_years,
+        value=simulation_years,
+        step=1,
+        key="slr_selected_year"
+    )
+
+    selected = df[df["Year"] == selected_year].iloc[0]
+    water_level = selected["Relative Sea Level Rise (m)"]
+    extreme_level = selected["Extreme Water Level with Storm Surge (m)"]
+
+    left, right = st.columns([1.15, 1])
+
+    with left:
+        x = np.linspace(0, 10, 300)
+        land = 0.25 * (x - 2.5)
+        land = np.clip(land, -0.5, 3.5)
+
+        fig, ax = plt.subplots(figsize=(7, 4.8))
+        ax.fill_between(x, -1, land, alpha=0.45, label="Land")
+        ax.fill_between(
+            x,
+            -1,
+            water_level,
+            where=np.full_like(x, water_level > -1, dtype=bool),
+            alpha=0.35,
+            label="Mean Sea Level"
+        )
+        ax.axhline(extreme_level, linewidth=2, label="Extreme Water Level")
+        ax.axhline(protection_height, linestyle="--", linewidth=2, label="Protection Height")
+        ax.set_ylim(-0.5, max(4.0, protection_height + 0.8, extreme_level + 0.8))
+        ax.set_xlim(0, 10)
+        ax.set_xlabel("Coast-to-Inland Transect")
+        ax.set_ylabel("Elevation / Water Level (m)")
+        ax.set_title(f"Simplified Coastal Flood Profile — Year {selected_year}")
+        ax.legend(loc="upper left")
+        ax.grid(True, alpha=0.3)
+        st.pyplot(fig)
+
+    with right:
+        flooded_fraction = np.mean(land < extreme_level)
+        st.markdown(
+            f"""
+            **Year {selected_year} Snapshot**
+
+            - Temperature Anomaly: **+{selected['Temperature Anomaly (°C)']:.2f} °C**
+            - Relative Sea Level Rise: **{water_level:.2f} m**
+            - Storm Surge Height: **{storm_surge_height:.2f} m**
+            - Extreme Water Level: **{extreme_level:.2f} m**
+            - Coastal Protection Height: **{protection_height:.2f} m**
+            - Simplified Flooded Transect Fraction: **{flooded_fraction * 100:.1f}%**
+            """
+        )
+
+    with st.expander("View Simulation Data"):
+        st.dataframe(df, use_container_width=True)
+
+        csv = df.to_csv(index=False).encode("utf-8")
+        st.download_button(
+            label="Download Simulation Data as CSV",
+            data=csv,
+            file_name="sea_level_rise_simulation.csv",
+            mime="text/csv"
+        )
+
+    st.subheader("How the Model Works")
+
+    st.markdown(
+        """
+        This is a **simplified educational model**, not a full sea level projection model.
+        It is designed to help students understand why coastal flood risk depends on both global and local factors.
+
+        **1. Temperature anomaly** increases according to a simple warming rate:
+
+        `temperature_anomaly = warming_rate × year`
+
+        **2. Relative sea level rise** is estimated from four components:
+
+        `sea_level_rise = thermal_expansion + glacier_melt + ice_sheet_melt + local_subsidence`
+
+        **3. Extreme water level** adds storm surge on top of mean sea level rise:
+
+        `extreme_water_level = sea_level_rise + storm_surge_height`
+
+        **4. Flood risk** is estimated by comparing extreme water level with coastal protection height:
+
+        `protection_gap = protection_height - extreme_water_level`
+
+        The key idea is simple: **sea level rise is gradual, but flood disasters often happen when long-term sea level rise combines with short-term storm surge.**
+        """
+    )
+
+    st.warning(
+        "Model limitation: This lab intentionally simplifies sea level rise. It does not include tides, waves, local bathymetry, real elevation data, coastal erosion, groundwater flooding, or official IPCC projection pathways."
     )
 
 
